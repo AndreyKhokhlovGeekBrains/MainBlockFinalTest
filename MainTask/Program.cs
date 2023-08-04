@@ -10,8 +10,12 @@
 Console.WriteLine("Введите элементы для массива через точки с запятой \";\" :");
 string? input = InputCheck(Console.ReadLine());
 
-// Replace multiple spaces with a single space and then split the input
-string[] myArray = input.Replace(" ", " ").Split(';', StringSplitOptions.RemoveEmptyEntries);
+string[] myArray = input.Split(';', StringSplitOptions.RemoveEmptyEntries);
+for(int i = 0; i < myArray.Length; i++)
+{
+    myArray[i] = myArray[i].Trim();
+}
+
 string[] newArray = GetNewArray(myArray);
 Console.WriteLine("Строки нового массива длина которых меньше, либо равна 3 символам:");
 PrintArray(newArray);
@@ -28,22 +32,22 @@ string InputCheck(string value)
     }
     else
     {
-        return value.Trim();
+        return value;
     }
 }
 
 string[] GetNewArray(string[] array)
 {
-    int count = array.Count(value => !string.IsNullOrEmpty(value) && value.Trim().Length < 4 && !(value == " "));
+    int count = array.Count(value => !string.IsNullOrEmpty(value) && value.Length < 4 && !(value == " "));
     string[] newArray = new string[count];
     int newArrayIndex = 0;
 
     for (int i = 0; i < array.Length; i++)
     {
-        string trimmedValue = array[i].Trim();
-        if (trimmedValue.Length < 4 && !string.IsNullOrEmpty(trimmedValue) && !(trimmedValue == " "))
+        string value = array[i];
+        if (value.Length < 4 && !string.IsNullOrEmpty(value) && !(value == " "))
         {
-            newArray[newArrayIndex] = trimmedValue;
+            newArray[newArrayIndex] = value;
             newArrayIndex++;
         }
     }
